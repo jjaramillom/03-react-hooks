@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { generateGradient, getMatchingPosts } from '#shared/blog-posts'
 import { setGlobalSearchParams } from '#shared/utils'
@@ -16,6 +16,16 @@ function App() {
 	const dogChecked = words.includes('dog')
 	const catChecked = words.includes('cat')
 	const caterpillarChecked = words.includes('caterpillar')
+
+	useEffect(() => {
+		const onPopstate = (evt: PopStateEvent) => {
+			setQuery(getQueryParam())
+		}
+		window.addEventListener('popstate', onPopstate)
+		return () => {
+			window.removeEventListener('popstate', onPopstate)
+		}
+	}, [])
 
 	// 🐨 add a useEffect(() => {}, []) call here (we'll talk about that empty array later)
 	// 🐨 in the useEffect callback, subscribe to window's popstate event
