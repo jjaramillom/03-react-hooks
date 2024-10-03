@@ -4,16 +4,13 @@ import { generateGradient, getMatchingPosts } from '#shared/blog-posts'
 
 function App() {
 	const [query, setQuery] = useState('')
-	// 🐨 move the words variable from handleCheck to here
-	// 🦉 this is deriving state!
-
-	// 🐨 create a dogChecked variable that is whether words includes "dog"
-	// and do the same for "cat" and "caterpiller"
-	// 🦉 this is deriving state from derived state!
+	const words = query.split(' ')
+	const dogChecked = query.includes('dog')
+	const catChecked = query.includes('cat')
+	const caterpillarChecked = query.includes('caterpillar')
 
 	function handleCheck(tag: string, checked: boolean) {
 		// 🐨 move the words variable up to just below the useState call
-		const words = query.split(' ')
 		const newWords = checked ? [...words, tag] : words.filter(w => w !== tag)
 		setQuery(newWords.filter(Boolean).join(' ').trim())
 	}
@@ -35,6 +32,7 @@ function App() {
 					<label>
 						<input
 							type="checkbox"
+							checked={dogChecked}
 							// 🐨 control the checked state of this checkbox by setting the checked prop
 							onChange={e => handleCheck('dog', e.currentTarget.checked)}
 						/>{' '}
@@ -43,6 +41,7 @@ function App() {
 					<label>
 						<input
 							type="checkbox"
+							checked={catChecked}
 							// 🐨 control the checked state of this checkbox by setting the checked prop
 							onChange={e => handleCheck('cat', e.currentTarget.checked)}
 						/>{' '}
@@ -52,6 +51,7 @@ function App() {
 						<input
 							type="checkbox"
 							// 🐨 control the checked state of this checkbox by setting the checked prop
+							checked={caterpillarChecked}
 							onChange={e =>
 								handleCheck('caterpillar', e.currentTarget.checked)
 							}

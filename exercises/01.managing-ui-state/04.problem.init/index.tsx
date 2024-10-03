@@ -3,10 +3,11 @@ import { createRoot } from 'react-dom/client'
 import { generateGradient, getMatchingPosts } from '#shared/blog-posts'
 
 function App() {
+	const params = new URLSearchParams(window.location.search)
 	// 🐨 create a "params" variable that's the URLSearchParams from the search string
 	// 💰 new URLSearchParams(window.location.search)
 	// 🐨 initialize the state to the "query" param (fallback to an empty string if it doesn't exist)
-	const [query, setQuery] = useState('')
+	const [query, setQuery] = useState(params.get('query') ?? '')
 	// 📜 https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
 	const words = query.split(' ')
 
