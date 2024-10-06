@@ -1,23 +1,32 @@
 import { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 // 💰 you'll need this stuff:
-// import VanillaTilt from 'vanilla-tilt'
-//
-// interface HTMLVanillaTiltElement extends HTMLDivElement {
-// 	vanillaTilt?: VanillaTilt
-// }
-//
-// const vanillaTiltOptions = {
-// 	max: 25,
-// 	speed: 400,
-// 	glare: true,
-// 	'max-glare': 0.5,
-// }
+import VanillaTilt from 'vanilla-tilt'
+
+interface HTMLVanillaTiltElement extends HTMLDivElement {
+	vanillaTilt?: VanillaTilt
+}
+
+const vanillaTiltOptions = {
+	max: 25,
+	speed: 400,
+	glare: true,
+	'max-glare': 0.5,
+}
 
 function Tilt({ children }: { children: React.ReactNode }) {
 	return (
 		<div
 			className="tilt-root"
+			ref={(tiltNode: HTMLVanillaTiltElement | null) => {
+				if (!tiltNode) {
+					return
+				}
+				VanillaTilt.init(tiltNode, vanillaTiltOptions)
+				return () => {
+					tiltNode.vanillaTilt?.destroy()
+				}
+			}}
 			// 🐨 add a ref callback here
 			// the callback should accept a tiltNode parameter (🦺 typed as an
 			// HTMLVanillaTiltElement) and then:
